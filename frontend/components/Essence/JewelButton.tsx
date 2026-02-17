@@ -3,12 +3,16 @@
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-interface JewelButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface JewelButtonProps {
     children: React.ReactNode;
+    className?: string;
     variant?: "primary" | "secondary";
+    onClick?: () => void;
+    disabled?: boolean;
+    type?: "button" | "submit" | "reset";
 }
 
-export default function JewelButton({ children, className, variant = "primary", ...props }: JewelButtonProps) {
+export default function JewelButton({ children, className, variant = "primary", onClick, disabled, type }: JewelButtonProps) {
     return (
         <motion.button
             whileHover={{ scale: 1.05 }}
@@ -19,14 +23,12 @@ export default function JewelButton({ children, className, variant = "primary", 
                 variant === "primary"
                     ? "text-charcoal bg-gold hover:bg-gold-light"
                     : "text-gold border border-gold hover:bg-gold/10",
-                // Gem shape effect
-                "clip-path-polygon-[10%_0,100%_0,90%_100%,0%_100%]", // Slight parallelogram or cut corner look
+                "clip-path-polygon-[10%_0,100%_0,90%_100%,0%_100%]",
                 className
             )}
-            onClick={props.onClick}
-            disabled={props.disabled}
-            type={props.type}
-            {...props}
+            onClick={onClick}
+            disabled={disabled}
+            type={type}
         >
             {/* Shine Effect */}
             <div className="absolute inset-0 -translate-x-full group-hover:animate-shimmer bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12" />
